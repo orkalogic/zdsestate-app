@@ -14,9 +14,11 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.2",
     "axios": "^1.7.7",
+    "flowbite-react": "^0.10.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1"
+    "react-router-dom": "^6.26.1",
+    "use-signals": "^0.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
