@@ -15,7 +15,8 @@ const App = () => (
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route element={<ProtectedRoute />}>
+        {/* Those are my protected route */}
+        <Route element={<ProtectedRoute />} >
           <Route path="/listings" element={<Listings />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

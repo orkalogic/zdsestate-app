@@ -42,6 +42,11 @@ function SignIn() {
       return notify("error", err.response.data.msg);
     }
   };
+  useEffect(() => {
+    if (authTokenSignal.get()) {
+      navigate("/listings");
+    }
+  }, []);
 
   function notify(option, message) {
     switch (option) {
@@ -74,12 +79,6 @@ function SignIn() {
         break;
     }
   }
-
-  useEffect(() => {
-    if (authTokenSignal.get()) {
-      navigate("/listings");
-    }
-  }, []);
 
   return (
     <div className="flex max-w-md flex-col mx-auto justify-center h-lvh ">
