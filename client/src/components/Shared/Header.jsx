@@ -1,20 +1,13 @@
 import React from "react";
 import { FaSearch } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSignal } from "use-signals";
 import { authTokenSignal } from "../../store/store";
+import DropDown from "../DropDown";
 
 function Header() {
   const authTokenState = useSignal(authTokenSignal);
-  const Navigate = useNavigate();
 
-  const handleSignOut = () => {
-    if (authTokenSignal.get()) {
-      localStorage.removeItem("authToken");
-      authTokenSignal.set(null);
-      Navigate("/");
-    }
-  };
   return (
     <header className="bg-green-100 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
@@ -60,11 +53,8 @@ function Header() {
               <li className=" text-green-700 hover:underline ">Sign in</li>
             </Link>
           ) : (
-            <li
-              onClick={handleSignOut}
-              className="cursor-pointer text-green-700 hover:underline"
-            >
-              Sign out
+            <li className="cursor-pointer text-green-700 hover:underline">
+              <DropDown />
             </li>
           )}
         </ul>

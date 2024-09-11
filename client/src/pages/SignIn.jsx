@@ -30,8 +30,10 @@ function SignIn() {
         userDataState
         //{ withCredentials: true } // Ensure cookies are sent along with the request
       );
-      localStorage.setItem("authToken", res.data.userInfo.token);
+
+      localStorage.setItem("authToken", res.data.token);
       authTokenSignal.set(localStorage.getItem("authToken"));
+      // currentUserSignal.set(jwtDecode(res.data.token));
       userDataSignal.set(userDataInitialState);
       setIsLoading(false);
       // notify("success", "Welcome!");
@@ -123,7 +125,7 @@ function SignIn() {
         </div> */}
         <button
           disabled={isLoading}
-          className="bg-green-500 p-2 rounded-md text-green-50"
+          className="bg-green-500 p-2 rounded-md text-green-50 uppercase"
           type="submit"
         >
           {isLoading ? "Loading..." : "Sign In"}
@@ -132,7 +134,7 @@ function SignIn() {
       <div className="flex gap-2 mt-5 ">
         <p>Don't have an account?</p>
         <Link to="/sign-up">
-          <span className="text-green-500">Sign up</span>
+          <span className="text-green-500 uppercase">Sign up</span>
         </Link>
       </div>
 

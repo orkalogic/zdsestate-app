@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Register a user / Signup
 const register = async (req, res) => {
   try {
-    let { fullName, email, password } = req.body;
+    let { fullName, email, password, avatar } = req.body;
     if (!fullName || !email || !password) {
       return res.status(400).send({ msg: "All fields are required!" });
     }
@@ -29,6 +29,7 @@ const register = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
+      avatar,
     });
     return res
       .status(200)
@@ -72,10 +73,7 @@ const login = async (req, res) => {
 
     res.status(200).send({
       msg: `Login Successfully, Welcome ${oldUser.fullName}.`,
-      userInfo: {
-        token,
-        payload: payload.currentUser,
-      },
+      token,
     });
 
     // // OR Set the token as an HTTP-only cookie / but we also need to modify our server.js app.use(cors({}))

@@ -12,6 +12,7 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
   const userDataState = useSignal(userDataSignal);
@@ -141,11 +142,12 @@ function SignUp() {
         </div> */}
         <button
           disabled={isLoading}
-          className="bg-green-500 p-2 rounded-md text-green-50"
+          className="bg-green-500 p-2 rounded-md text-green-50 uppercase "
           type="submit"
         >
           {isLoading ? "Loading..." : "Sign Up"}
         </button>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5 ">
         <p>Have an account?</p>

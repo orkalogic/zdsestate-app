@@ -6,3 +6,7 @@
 body{
     background-color: #f0fdf4;
 }
+
+.form-class > label, input {
+    @apply w-full; /* This will apply w-full to all direct children */
+}
