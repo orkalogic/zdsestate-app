@@ -29,7 +29,7 @@ function Header() {
           </label>
           <FaSearch className="text-slate-600" />
         </form>
-        <ul className="flex gap-4 font-bold">
+        <ul className="flex gap-4 font-bold items-center justify-center">
           <Link to="/">
             <li className="hidden sm:inline text-green-700 hover:underline ">
               Home

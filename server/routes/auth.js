@@ -2,18 +2,23 @@ const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
 
-const { register, login } = require("../controller/auth");
+const { register, login, updateUser } = require("../controller/auth");
+const verifyToken = require("../middleware/auth");
 
 //-----------------USER CRUD Operations----------------------
 
 // Register a User / Signup
-router.post(  "/register",   [
-  check("fullName", "Full name is required").not().isEmpty(),
-  check("email", "Please provide a valid email").isEmail(),
-  check("password", "Password must be at least 6 character").isLength({
-    min: 6,
-  }),
-], register);
+router.post(
+  "/register",
+  [
+    check("fullName", "Full name is required").not().isEmpty(),
+    check("email", "Please provide a valid email").isEmail(),
+    check("password", "Password must be at least 6 character").isLength({
+      min: 6,
+    }),
+  ],
+  register
+);
 
 // Login a user / authenticate
 router.post(
@@ -24,5 +29,7 @@ router.post(
   ],
   login
 );
+
+
 
 module.exports = router;

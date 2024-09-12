@@ -5,6 +5,7 @@ const cors = require("cors");
 const dbConnection = require("./config/connection");
 const verifyToken = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 const listingRoutes = require("./routes/listing");
 
 const app = express();
@@ -26,9 +27,13 @@ app.use(cors());
 //------------------DB Connection---------------------------------
 dbConnection();
 
-//------------------User Routes---------------------------
+//------------------auth Routes---------------------------
 
 app.use("/auth", authRoutes);
+
+//------------------User Routes---------------------------
+
+app.use("/users", userRoutes);
 
 //------------------Listing Routes---------------------------
 

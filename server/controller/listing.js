@@ -94,7 +94,9 @@ const updateListing = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).send({ msg: "Listing not found" });
+      return res
+        .status(404)
+        .send({ msg: "Listing not found", Error: err.message });
     }
     return res
       .status(500)
@@ -142,7 +144,9 @@ const getListing = async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.kind === "ObjectId") {
-      return res.status(404).send({ msg: "Listing not found" });
+      return res
+        .status(404)
+        .send({ msg: "Listing not found", Error: err.message });
     }
     return res
       .status(500)

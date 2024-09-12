@@ -15,7 +15,7 @@ const verifyToken = async (req, res, next) => {
   // Verify the token
   try {
     const clientToken = token.split(" ")[1];
-    const verifiedToken = await jwt.verify(clientToken, JWT_SECRET);
+    const verifiedToken = jwt.verify(clientToken, JWT_SECRET);
     req.user = verifiedToken;
     next();
   } catch (err) {

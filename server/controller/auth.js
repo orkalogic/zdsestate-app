@@ -10,7 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // Register a user / Signup
 const register = async (req, res) => {
   try {
-    let { fullName, email, password, avatar } = req.body;
+    let { fullName, email, password } = req.body;
     if (!fullName || !email || !password) {
       return res.status(400).send({ msg: "All fields are required!" });
     }
@@ -29,7 +29,6 @@ const register = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      avatar,
     });
     return res
       .status(200)
@@ -65,12 +64,16 @@ const login = async (req, res) => {
     // Retrieve user details without the password
     let currentUser = await User.findById(oldUser._id).select("-password");
     // console.log(currentUser);
-    let payload = { currentUser };
+
+    let payload = {
+      id: currentUser.id,
+      fullName: currentUser.fullName,
+      email: currentUser.email,
+    };
 
     // Generate the token using JWT by signing
     // secrete key
     let token = jwt.sign(payload, JWT_SECRET); // we can also add expiration time {expiresIn: "1hr"}
-
     res.status(200).send({
       msg: `Login Successfully, Welcome ${oldUser.fullName}.`,
       token,

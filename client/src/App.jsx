@@ -8,6 +8,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Header from "./components/Shared/Header";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Listings from "./pages/Listings";
+import CreateListing from "./pages/CreateListing";
 
 const App = () => (
   <>
@@ -16,9 +17,10 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         {/* Those are my protected route */}
-        <Route element={<ProtectedRoute />} >
+        <Route element={<ProtectedRoute />}>
           <Route path="/listings" element={<Listings />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Route>
         <Route path="/about" element={<About />} />
         <Route path="/sign-up" element={<SignUp />} />

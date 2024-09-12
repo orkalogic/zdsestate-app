@@ -4,15 +4,18 @@ import {
   userDataSignal,
   userDataInitialState,
   authTokenSignal,
+  currentUserSignal,
 } from "../store/store";
 import axios from "axios";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
+import Notify from "../components/Notify";
+import { jwtDecode } from "jwt-decode";
 
 function SignIn() {
   const userDataState = useSignal(userDataSignal);
+  const currentUserState = useSignal(currentUserSignal);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -33,15 +36,21 @@ function SignIn() {
 
       localStorage.setItem("authToken", res.data.token);
       authTokenSignal.set(localStorage.getItem("authToken"));
-      // currentUserSignal.set(jwtDecode(res.data.token));
+
+      // Set default Authorization header for future requests
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${authTokenSignal.get()}`;
       userDataSignal.set(userDataInitialState);
       setIsLoading(false);
       // notify("success", "Welcome!");
+      authTokenSignal.get() &&
+        currentUserSignal.set(jwtDecode(authTokenSignal.get().toString()));
       navigate("/listings");
       return;
     } catch (err) {
       setIsLoading(false);
-      return notify("error", err.response.data.msg);
+      return Notify("error", err.response.data.msg);
     }
   };
   useEffect(() => {
@@ -49,38 +58,6 @@ function SignIn() {
       navigate("/listings");
     }
   }, []);
-
-  function notify(option, message) {
-    switch (option) {
-      case "success":
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        break;
-      case "error":
-        toast.error(message, {
-          position: "bottom-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        break;
-      default:
-        toast.warning("Couldn't Register a user!");
-        break;
-    }
-  }
 
   return (
     <div className="flex max-w-md flex-col mx-auto justify-center h-lvh ">
@@ -117,12 +94,7 @@ function SignIn() {
             className="border-2 border-green-500 focus:border-green-700 focus:outline-none w-[450px] p-2 rounded-md "
           />
         </div>
-        {/* <div className="flex items-center gap-2">
-          <Checkbox id="remember" />
-          <label htmlFor="remember" className="text-green-700 text-lg">
-            Remember me
-          </label>
-        </div> */}
+
         <button
           disabled={isLoading}
           className="bg-green-500 p-2 rounded-md text-green-50 uppercase"
@@ -137,8 +109,6 @@ function SignIn() {
           <span className="text-green-500 uppercase">Sign up</span>
         </Link>
       </div>
-
-      <ToastContainer />
     </div>
   );
 }

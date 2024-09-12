@@ -12,7 +12,7 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from "react";
-import OAuth from "../components/OAuth";
+import Notify from "../components/Notify";
 
 function SignUp() {
   const userDataState = useSignal(userDataSignal);
@@ -37,7 +37,7 @@ function SignUp() {
       return;
     } catch (err) {
       setIsLoading(false);
-      return notify("error", err.response.data.msg);
+      return Notify("error", err.response.data.msg);
     }
     //
     // console.log(userDataSignal.get());
@@ -48,38 +48,6 @@ function SignUp() {
       navigate("/listings");
     }
   }, []);
-
-  function notify(option, message) {
-    switch (option) {
-      case "success":
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        break;
-      case "error":
-        toast.error(message, {
-          position: "bottom-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        break;
-      default:
-        toast.warning("Couldn't Register a user!");
-        break;
-    }
-  }
 
   return (
     <div className="flex max-w-md flex-col mx-auto justify-center h-lvh ">
@@ -147,7 +115,6 @@ function SignUp() {
         >
           {isLoading ? "Loading..." : "Sign Up"}
         </button>
-        <OAuth />
       </form>
       <div className="flex gap-2 mt-5 ">
         <p>Have an account?</p>
